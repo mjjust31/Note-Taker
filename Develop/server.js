@@ -6,6 +6,8 @@ const fs = require("fs");
 const app = express();
 const uuid = require("./helpers/uuid");
 const noteData = JSON.parse(fs.readFileSync("./db/db.json"));
+ //needed to parse it to be able to use javascript
+
 
 
 const PORT = process.env.port || 3001;
@@ -14,8 +16,6 @@ const PORT = process.env.port || 3001;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
-
-
 
 //setup routes using CRUD
 
@@ -59,8 +59,31 @@ app.post("/api/notes", (req, res) => {
   }
 });
 
+//get a single note based on generated id
+console.log(noteData[0].note_id)
+
+
+app.get("/api/notes/:note_id", (req, res) => {
+  if (req.params.note_id) {
+    const noteId = req.params.note_id;
+    for (let i = 0; i < noteData.length; i++) {
+      const currentNote = noteData[i];
+      if (currentNote.note_id === noteId) {
+        return res.status(200).json(currentNote);
+      }
+    }
+    res.status(404).send("Note not found");
+  } else {
+    res.status(400).send("Note ID not provided");
+  }
+});
+
 // DELETE /api/notes/:id
+
+app.delete("/api/notes/:id", (res, req) => {});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
+// console.log(noteData);
