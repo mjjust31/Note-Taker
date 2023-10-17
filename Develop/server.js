@@ -34,7 +34,7 @@ app.get("/api/notes", (req, res) => {
   return res.json(noteData);
 });
 
-app.post("/notes", (req, res) => {
+app.post("/api/notes", (req, res) => {
   console.info(`${req.method} received`);
 
   const { title, text } = req.body;
