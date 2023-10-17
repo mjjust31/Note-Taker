@@ -25,12 +25,28 @@ app.get("/notes", function (req, res) {
       console.log("it worked");
     }
   });
-
 });
 
 app.get("/api/notes", (req, res) => {
   return res.json(noteData);
+});
 
+app.post("/api/notes", (req, res) => {
+  const { title, text } = req.body;
+  if (title && text) {
+    const newNote = {
+      title: title,
+      text: text,
+      note_id: uuid(),
+    };
+    const response = {
+      status: "success",
+      body: newNote,
+    };
+    res.status(201).json(response);
+  } else {
+    res.status(500).json({ message: "Error in creating your note" });
+  }
 });
 
 // DELETE /api/notes/:id
