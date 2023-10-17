@@ -5,7 +5,8 @@ const path = require("path");
 const fs = require("fs");
 const app = express();
 const uuid = require("./helpers/uuid");
-const noteData = require("./db/db.json");
+const noteData = JSON.parse(fs.readFileSync("./db/db.json"));
+
 
 const PORT = process.env.port || 3001;
 
@@ -13,6 +14,8 @@ const PORT = process.env.port || 3001;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
+
+
 
 //setup routes using CRUD
 
@@ -31,7 +34,9 @@ app.get("/api/notes", (req, res) => {
   return res.json(noteData);
 });
 
-app.post("/api/notes", (req, res) => {
+app.post("/notes", (req, res) => {
+  console.info(`${req.method} received`);
+
   const { title, text } = req.body;
   if (title && text) {
     const newNote = {
@@ -39,13 +44,18 @@ app.post("/api/notes", (req, res) => {
       text: text,
       note_id: uuid(),
     };
+
+    noteData.push(newNote);
+    const stringNoteData = JSON.stringify(noteData);
+
     const response = {
       status: "success",
       body: newNote,
     };
-    res.status(201).json(response);
-  } else {
-    res.status(500).json({ message: "Error in creating your note" });
+
+    fs.writeFile("./db/db.json", stringNoteData, (err) => {
+      res.status(201).json(response);
+    });
   }
 });
 

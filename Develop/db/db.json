@@ -1,7 +1,4 @@
 [
-    {
-        "title":"Test Title",
-        "text":"Test text", 
-        "note_id": "abd3"
-    }
+  { "title": "Jessie Test File", "text": "Test text", "note_id": "abd3" },
+  { "title": "White Sox", "text": "The best", "note_id": "2e45" }
 ]
