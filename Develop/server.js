@@ -17,7 +17,21 @@ app.use(express.static("public"));
 //setup routes using CRUD
 
 app.get("/notes", function (req, res) {
-  res.json("this is the way");
+  fs.readFile("./public/notes.html", "utf-8", (error, data) => {
+    if (error) {
+      res.status(404).json({ message: "Internal error for reading the file" });
+    } else {
+      res.send(data);
+      console.log("it worked");
+    }
+  });
+
+  // fs.readFile("./data.csv", "utf8", (error, data) => {
+  //   if (error) {
+  //     console.error(error);
+  //   } else {
+  //     console.table(data);
+  //
 });
 
 app.use("/api/notes", (req, res) => {
