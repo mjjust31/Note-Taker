@@ -1,29 +1,32 @@
 //set up express
 
 const express = require("express");
-const path = require('path');
+const path = require("path");
+const fs = require("fs");
 const app = express();
-const htmlRoute = require('./routes/route-html'); 
-// const apiRoute = require('./routes/route-api');
-const PORT = process.env.port || 3001;
-// const dbTest = require('./db/db.json')
-// app.use("/", (req, res) => {
-//   res.send(`<h1> ${Date()} </h1> `)
-// })
+const uuid = require("./helpers/uuid");
+const noteData = require("./db/db.json");
 
+const PORT = process.env.port || 3001;
+
+//set up your middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
-app.use(htmlRoute);
-// app.use(apiRoute);
 
+//setup routes using CRUD
 
-// '/api/notes'
-// `/api/notes/${id}`,
-// /notes'
+app.get("/notes", function (req, res) {
+  res.json("this is the way");
+});
 
+app.use("/api/notes", (req, res) => {
+  res.json(noteData);
+  console.log("working");
+});
+
+// DELETE /api/notes/:id
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
-
