@@ -7,6 +7,7 @@
 AS A small business owner
 I WANT to be able to write and save notes
 SO THAT I can organize my thoughts and keep track of tasks I need to complete
+
 ### Acceptance Criteria
 
 GIVEN a note-taking application
@@ -38,7 +39,6 @@ To assist me with understanding the path files, I watched the Express part of No
 
 I also feel like there is an easier way to delete the note. After much trial and error, it will work, but you have to press delete, and then refresh the page. I tried to do a forced window load after the delete path, but it didn't work. Although it will delete the task after pressing delete and then refreshing, I couldn't get it to do it after clicking the trash icon.
 
-
 ## License
 
 MIT License
@@ -46,3 +46,6 @@ MIT License
 ## Questions
 
 For any questions, please contact me at mj.justmann@gmail.com
+
+![Alt text](<Screen Shot 2023-10-18 at 4.53.58 PM.png>)
+![Alt text](<Screen Shot 2023-10-18 at 4.53.50 PM.png>)
