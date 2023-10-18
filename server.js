@@ -93,7 +93,7 @@ const deleteNote = (req, res) => {
             return;
           }
           res.status(200).send("Note deleted successfully.");
-          window.reload();
+
         });
       }
     }
