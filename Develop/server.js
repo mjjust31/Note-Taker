@@ -76,7 +76,20 @@ app.get(`/api/notes/:id`, (req, res) => {
 
 // DELETE /api/notes/:id
 
-// app.delete("/api/notes/:id", (res, req) => {});
+app.delete("/api/notes/:id", (req, res) => {
+  const noteId = req.params.id;
+  if (noteId) {
+    for (let i = 0; i < noteData.length; i++) {
+      const currentNote = noteData[i];
+      if (currentNote.id === noteId) {
+        return res.status(204).json({ id: null });
+      }
+    }
+    return res.status(404).send("Note not found");
+  } else {
+    return res.status(400).send("Note ID not provided");
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
