@@ -6,9 +6,7 @@ const fs = require("fs");
 const app = express();
 const uuid = require("./helpers/uuid");
 const noteData = JSON.parse(fs.readFileSync("./db/db.json"));
- //needed to parse it to be able to use javascript
-
-
+//needed to parse it to be able to use javascript
 
 const PORT = process.env.port || 3001;
 
@@ -20,11 +18,11 @@ app.use(express.static("public"));
 //setup routes using CRUD
 
 app.get("/notes", function (req, res) {
-  fs.readFile("./public/notes.html", "utf-8", (error, htmlPage) => {
+  fs.readFile("./public/notes.html", "utf-8", (error, data) => {
     if (error) {
       res.status(404).json({ message: "Internal error for reading the file" });
     } else {
-      res.send(htmlPage);
+      res.send(data);
       console.log("it worked");
     }
   });
@@ -42,7 +40,7 @@ app.post("/api/notes", (req, res) => {
     const newNote = {
       title: title,
       text: text,
-      note_id: uuid(),
+      id: uuid(),
     };
 
     noteData.push(newNote);
@@ -60,27 +58,25 @@ app.post("/api/notes", (req, res) => {
 });
 
 //get a single note based on generated id
-console.log(noteData[0].note_id)
-
-
-app.get("/api/notes/:note_id", (req, res) => {
-  if (req.params.note_id) {
-    const noteId = req.params.note_id;
+// console.log(noteData[0].note_id)
+app.get(`/api/notes/:id`, (req, res) => {
+  const noteId = req.params.id;
+  if (noteId) {
     for (let i = 0; i < noteData.length; i++) {
       const currentNote = noteData[i];
-      if (currentNote.note_id === noteId) {
-        return res.status(200).json(currentNote);
+      if (currentNote.id === noteId) {
+        return res.status(200).json({ id: currentNote.id });
       }
     }
-    res.status(404).send("Note not found");
+    return res.status(404).send("Note not found");
   } else {
-    res.status(400).send("Note ID not provided");
+    return res.status(400).send("Note ID not provided");
   }
 });
 
 // DELETE /api/notes/:id
 
-app.delete("/api/notes/:id", (res, req) => {});
+// app.delete("/api/notes/:id", (res, req) => {});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
