@@ -82,7 +82,7 @@ app.delete("/api/notes/:id", (req, res) => {
     for (let i = 0; i < noteData.length; i++) {
       const currentNote = noteData[i];
       if (currentNote.id === noteId) {
-        return res.status(204).json({ id: null });
+        return res.status(204).json({ title: null, text: null, id: null });
       }
     }
     return res.status(404).send("Note not found");
