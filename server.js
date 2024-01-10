@@ -8,7 +8,7 @@ const uuid = require("./helpers/uuid");
 const noteData = JSON.parse(fs.readFileSync("./db/db.json"));
 //needed to parse it to be able to use javascript
 
-const PORT = process.env.port || 3001;
+const PORT = process.env.PORT || 3001;
 
 //set up your middleware
 app.use(express.urlencoded({ extended: true }));
@@ -93,7 +93,6 @@ const deleteNote = (req, res) => {
             return;
           }
           res.status(200).send("Note deleted successfully.");
-
         });
       }
     }
